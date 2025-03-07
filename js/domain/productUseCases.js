@@ -25,3 +25,10 @@ export async function deleteProduct(productId) {
     method: "DELETE"
   });
 }
+
+export async function buyProduct(productId) {
+  return request(`${API_BASE}/products/${productId}/buy`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+}

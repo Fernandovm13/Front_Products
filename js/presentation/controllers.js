@@ -18,7 +18,7 @@ export function initProductController() {
       await productUseCases.createProduct(product);
       alert("Producto creado con éxito");
       createProductForm.reset();
-      loadProducts(); 
+      loadProducts();
     } catch (error) {
       alert("Error al crear producto: " + error.message);
     }
@@ -31,53 +31,62 @@ export function initProductController() {
     const productId = target.getAttribute("data-id");
 
     if (target.classList.contains("delete-product")) {
-        if (confirm("¿Seguro que desea eliminar este producto?")) {
-            try {
-                await productUseCases.deleteProduct(productId);
-                alert("Producto eliminado");
-                loadProducts();
-            } catch (error) {
-                alert("Error al eliminar producto: " + error.message);
-            }
-        }
-    } else if (target.classList.contains("edit-product")) {
-        const listItem = target.closest(".list-item"); 
-        if (!listItem) return;
-
-        const itemInfo = listItem.querySelector(".item-info");
-        const currentName = itemInfo.querySelector("span:nth-of-type(2)").textContent.replace("Nombre: ", "").trim();
-        const currentPrice = itemInfo.querySelector("span:nth-of-type(3)").textContent.replace("Precio: ", "").trim();
-        const currentCategory = itemInfo.querySelector("span:nth-of-type(4)").textContent.replace("Categoría: ", "").trim();
-
-        const newName = prompt("Nuevo nombre:", currentName);
-        if (!newName) return;
-
-        const newPrice = prompt("Nuevo precio:", currentPrice);
-        if (!newPrice) return;
-
-        const newCategory = prompt("Nuevo ID de categoría (opcional):", currentCategory);
-
-        const updatedProduct = {
-            id: parseInt(productId),
-            name: newName,
-            price: parseFloat(newPrice),
-        };
-
-        if (newCategory) {
-            updatedProduct.category_id = parseInt(newCategory);
-        } else {
-            updatedProduct.category_id = null;
-        }
-
+      if (confirm("¿Seguro que desea eliminar este producto?")) {
         try {
-            await productUseCases.updateProduct(updatedProduct);
-            alert("Producto actualizado");
-            loadProducts();
+          await productUseCases.deleteProduct(productId);
+          alert("Producto eliminado");
+          loadProducts();
         } catch (error) {
-            alert("Error al actualizar producto: " + error.message);
+          alert("Error al eliminar producto: " + error.message);
         }
+      }
+    } else if (target.classList.contains("edit-product")) {
+      const listItem = target.closest(".list-item");
+      if (!listItem) return;
+
+      const itemInfo = listItem.querySelector(".item-info");
+      const currentName = itemInfo.querySelector("span:nth-of-type(2)").textContent.replace("Nombre: ", "").trim();
+      const currentPrice = itemInfo.querySelector("span:nth-of-type(3)").textContent.replace("Precio: ", "").trim();
+      const currentCategory = itemInfo.querySelector("span:nth-of-type(4)").textContent.replace("Categoría: ", "").trim();
+
+      const newName = prompt("Nuevo nombre:", currentName);
+      if (!newName) return;
+
+      const newPrice = prompt("Nuevo precio:", currentPrice);
+      if (!newPrice) return;
+
+      const newCategory = prompt("Nuevo ID de categoría", currentCategory);
+
+      const updatedProduct = {
+        id: parseInt(productId),
+        name: newName,
+        price: parseFloat(newPrice),
+      };
+
+      if (newCategory) {
+        updatedProduct.category_id = parseInt(newCategory);
+      } else {
+        updatedProduct.category_id = null;
+      }
+
+      try {
+        await productUseCases.updateProduct(updatedProduct);
+        alert("Producto actualizado");
+        loadProducts();
+      } catch (error) {
+        alert("Error al actualizar producto: " + error.message);
+      }
+    } else if (target.classList.contains("buy-product")) {
+      if (confirm("¿Seguro que desea comprar este producto?")) {
+        try {
+          await productUseCases.buyProduct(productId);
+          alert("Compra realizada con éxito");
+        } catch (error) {
+          alert("Error al realizar la compra: " + error.message);
+        }
+      }
     }
-});
+  });
 
   async function loadProducts() {
     try {

@@ -173,6 +173,24 @@ h2 i {
     background-color: #c0392b;
 }
 
+.buy-btn {
+    background-color: #2ecc71; /* Verde */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.buy-btn:hover {
+    background-color: #27ae60; /* Verde más oscuro al pasar el mouse */
+}
+
 @media (max-width: 768px) {
     .form {
         flex-direction: column;

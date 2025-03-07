@@ -20,6 +20,9 @@ export function renderProducts(products) {
               <button class="btn delete-btn delete-product" data-id="${p.id}">
                 <i class="fas fa-trash"></i> Eliminar
               </button>
+              <button class="btn buy-btn buy-product" data-id="${p.id}">
+                <i class="fas fa-shopping-cart"></i> Comprar
+              </button>
             </div>
           </li>`
           )
