@@ -1,4 +1,4 @@
-export const API_BASE = "http://localhost:8080";
+export const API_BASE = "http://107.21.255.79:8080";
 
 export async function request(url, options = {}) {
   try {
